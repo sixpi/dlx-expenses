@@ -1,0 +1,55 @@
+{% macro render_field(field, input_width=6, with_label=True, label_width=2) %}
+  <div class="form-group{% if field.errors %} has-error{% endif%}">
+    {% if with_label %}
+      {{ field.label(class="control-label col-md-{0}".format(label_width)) }}
+    {% endif %}
+    <div class="col-md-{{ input_width }}">
+      {{ field(class="form-control", **kwargs) }}
+      {% if field.errors %}
+        {% for error in field.errors %}
+          <span class="help-block">{{ error }}</span>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+{% endmacro %}
+
+{% macro pagination_controls(pagination, endpoint) %}
+  <ul class="pagination">
+    <li {% if not pagination.has_prev %}class="disabled"{% endif %}>
+      {% if pagination.has_prev %}
+        <a href="{{ url_for(endpoint, page=pagination.prev_num, **kwargs)}}">
+          <i class="fa fa-angle-left"></i>
+        </a>
+      {% else %}
+        <span>
+          <i class="fa fa-angle-left"></i>
+        </span>
+      {% endif %}
+    </li>
+
+    {%- for page in pagination.iter_pages() %}
+      {% if page %}
+        {% if page != pagination.page %}
+          <li><a href="{{ url_for(endpoint, page=page, **kwargs) }}">{{ page }}</a></li>
+        {% else %}
+          <li class="active">
+            <a href="{{ url_for(endpoint, page=page, **kwargs) }}">{{ page }}</a>
+          </li>
+        {% endif %}
+      {% else %}
+        <li class="disabled"><span>…</span></li>
+      {% endif %}
+    {%- endfor %}
+
+    <li {% if not pagination.has_next %}class="disabled"{% endif %}>
+      {% if pagination.has_next %}
+        <a href="{{ url_for(endpoint, page=pagination.next_num, **kwargs)}}">
+          <i class="fa fa-angle-right"></i>
+        </a>
+      {% else %}
+        <span><i class="fa fa-angle-right"></i></span>
+      {% endif %}
+    </li>
+  </ul>
+{% endmacro %}

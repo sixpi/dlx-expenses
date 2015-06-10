@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% from "_formhelpers.html" import render_field %}
+
+{% block content %}
+  <h1>Expenses</h1>
+
+  <div class="container">
+    <form id="new-expense-form" method="post" name="login" class="form-horizontal" role="form"
+          action="{{ url_for('new') }}" accept-charset="utf-8">
+      <fieldset>
+        {{ render_field(form.item_name, placeholder="Username") }}
+        {{ render_field(form.amount, placeholder="Password") }}
+        <div class="form-group">
+          <div class="col-md-offset-2 col-md-10">
+            <button type="submit" class="btn btn-primary">Add Expense</button>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+{% endblock content %}

@@ -1,0 +1,5 @@
+# Development environment pip requirements file
+# Install via 'pip install -r requirements.txt -t src/lib'
+
+Flask==0.10.1
+WTForms==2.0.2
